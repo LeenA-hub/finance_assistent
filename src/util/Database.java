@@ -8,8 +8,10 @@ public class Database {
 
     public static Connection connect() {
         try {
+            // Force-load the SQLite JDBC driver
+            Class.forName("org.sqlite.JDBC");
             return DriverManager.getConnection(URL);
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
