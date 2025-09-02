@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<VBox spacing="10" alignment="CENTER"
+      xmlns="http://javafx.com/javafx/24"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controller.MainController">
+
+    <Label text="Personal Finance Manager" style="-fx-font-size: 20px;"/>
+    <TextField fx:id="dateField" promptText="YYYY-MM-DD"/>
+    <TextField fx:id="categoryField" promptText="Category"/>
+    <TextField fx:id="amountField" promptText="Amount"/>
+    <TextField fx:id="descriptionField" promptText="Description"/>
+    <Button text="Add Transaction" onAction="#handleAdd"/>
+    <Button text="Export CSV" onAction="#handleExportCSV"/>
+    <TableView fx:id="tableView" prefHeight="200">
+        <columns>
+            <TableColumn text="Date" fx:id="colDate"/>
+            <TableColumn text="Category" fx:id="colCategory"/>
+            <TableColumn text="Amount" fx:id="colAmount"/>
+            <TableColumn text="Description" fx:id="colDescription"/>
+        </columns>
+    </TableView>
+    <PieChart fx:id="categoryChart" prefHeight="200"/>
+</VBox>

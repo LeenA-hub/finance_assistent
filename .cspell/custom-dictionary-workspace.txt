@@ -1,6 +1,7 @@
 # Custom Dictionary Words
 AUTOINCREMENT
 classpathentry
+javac
 javafx
 jdbc
 pstmt
