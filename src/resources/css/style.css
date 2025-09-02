@@ -1,0 +1,18 @@
+.root {
+    font-family: "Arial", sans-serif;
+    -fx-font-family: "Arial";
+    padding: 20px;
+    -fx-padding: 20px;
+}
+.button {
+    background-color: #4CAF50;
+    -fx-background-color: #4CAF50;
+    color: white;
+    -fx-text-fill: white;
+    font-weight: bold;
+    -fx-font-weight: bold;
+}
+.table-view {
+    border-color: #ddd;
+    -fx-border-color: #ddd;
+}
