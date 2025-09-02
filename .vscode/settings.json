@@ -22,5 +22,8 @@
         "c:\\Users\\ameer\\Downloads\\openjfx-24.0.2_windows-x64_bin-sdk\\javafx-sdk-24.0.2\\lib\\javafx.controls.jar",
         "c:\\Users\\ameer\\Downloads\\openjfx-24.0.2_windows-x64_bin-sdk\\javafx-sdk-24.0.2\\lib\\javafx.fxml.jar",
         "c:\\Users\\ameer\\Downloads\\openjfx-24.0.2_windows-x64_bin-sdk\\javafx-sdk-24.0.2\\lib\\javafx-swt.jar"
-    ]
+    ],
+    "files.associations": {
+        "plyconfig.json": "jsonc"
+    }
 }
