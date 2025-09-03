@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<VBox spacing="10" alignment="CENTER"
-      xmlns="http://javafx.com/javafx/24"
+<VBox xmlns="http://javafx.com/javafx/24.0.2"
       xmlns:fx="http://javafx.com/fxml"
-      fx:controller="controller.MainController">
+      fx:controller="controller.MainController"
+      spacing="10" alignment="CENTER">
 
     <Label text="Personal Finance Manager" style="-fx-font-size: 20px;"/>
     <TextField fx:id="dateField" promptText="YYYY-MM-DD"/>
