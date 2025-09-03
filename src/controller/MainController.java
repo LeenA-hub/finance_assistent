@@ -7,7 +7,12 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.chart.PieChart;
 import model.Transaction;
 import model.TransactionDAO;
+import javafx.fxml.FXML;
+import javafx.scene.control.*;
+import javafx.scene.chart.PieChart;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
