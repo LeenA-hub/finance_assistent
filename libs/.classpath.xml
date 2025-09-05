@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+    <classpathentry kind="src" path="src"/>
+    <classpathentry kind="lib" path="C:/javafx-sdk-20/lib/javafx.base.jar"/>
+    <classpathentry kind="lib" path="C:/javafx-sdk-20/lib/javafx.controls.jar"/>
+    <classpathentry kind="lib" path="C:/javafx-sdk-20/lib/javafx.fxml.jar"/>
+    <!-- add other modules if needed -->
+    <classpathentry kind="output" path="bin"/>
+</classpath>

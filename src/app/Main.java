@@ -10,7 +10,6 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         Database.createTables(); // Create DB tables if not exist
-
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Main.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 600, 600);
 
