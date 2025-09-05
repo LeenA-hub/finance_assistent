@@ -5,4 +5,5 @@ javac
 javafx
 jdbc
 pstmt
+xcopy
 xerial
