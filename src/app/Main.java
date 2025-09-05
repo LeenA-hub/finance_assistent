@@ -10,11 +10,15 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         Database.createTables(); // Create DB tables if not exist
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Main.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 600, 600);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Main.fxml"));
+        Parent root = loader.load();
+        stage.setTitle("Personal Finance Manager");
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
 
-        // Optional: add CSS
-        scene.getStylesheets().add(getClass().getResource("/css/style.css").toExternalForm());
+    // Optional: add CSS
+    scene.getStylesheets().add(getClass().getResource("/css/style.css").toExternalForm());
 
         stage.setTitle("Personal Finance Manager");
         stage.setScene(scene);
