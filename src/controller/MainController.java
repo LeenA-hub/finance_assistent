@@ -35,6 +35,17 @@ public class MainController {
         colAmount.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().getAmount())));
         colDescription.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getDescription()));
 
+        // If no transactions exist, add sample data
+        if (tableView.getItems().isEmpty()) {
+            Transaction sample1 = new Transaction("2025-01-01", "Food", 25.50, "Groceries");
+            Transaction sample2 = new Transaction("2025-01-05", "Transport", 15.00, "Bus pass");
+            tableView.getItems().addAll(sample1, sample2);
+
+            // Also save them in DAO so chart updates
+            TransactionDAO.addTransaction(sample1);
+            TransactionDAO.addTransaction(sample2);
+        }
+
         updateChart();
     }
 

@@ -3,6 +3,7 @@
 <?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 
 <BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="controller.MainController">
 
@@ -27,7 +28,10 @@
 
     <!-- Right: Chart -->
     <right>
-        <VBox spacing="10" padding="10">
+        <VBox spacing="10">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
             <Label text="Spending by Category"/>
             <PieChart fx:id="categoryChart" prefWidth="300" prefHeight="300"/>
         </VBox>
@@ -35,7 +39,10 @@
 
     <!-- Bottom: Form + Buttons -->
     <bottom>
-        <VBox spacing="10" padding="10">
+        <VBox spacing="10">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
             <HBox spacing="10">
                 <TextField fx:id="dateField" promptText="Date (YYYY-MM-DD)" />
                 <TextField fx:id="categoryField" promptText="Category" />
