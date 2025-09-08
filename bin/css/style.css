@@ -1,18 +1,98 @@
+/* Base dark theme */
 .root {
-    font-family: "Arial", sans-serif;
-    -fx-font-family: "Arial";
-    padding: 20px;
-    -fx-padding: 20px;
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-background-color: #1e1e2f;
+    -fx-text-fill: #eeeeee;
 }
+
+/* Labels */
+.label {
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 14px;
+}
+
+/* TextField and PasswordField */
+.text-field, .password-field {
+    -fx-background-color: #2a2a40;
+    -fx-text-fill: #ffffff;
+    -fx-prompt-text-fill: #aaaaaa;
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+    -fx-border-color: #3c3c55;
+    -fx-border-width: 1;
+    -fx-padding: 5 10 5 10;
+}
+
+/* Buttons */
 .button {
-    background-color: #4CAF50;
-    -fx-background-color: #4CAF50;
-    color: white;
-    -fx-text-fill: white;
-    font-weight: bold;
+    -fx-background-color: #4b4b7d;
+    -fx-text-fill: #ffffff;
     -fx-font-weight: bold;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
 }
+
+.button:hover {
+    -fx-background-color: #6a6abb;
+}
+
+/* TableView */
 .table-view {
-    border-color: #ddd;
-    -fx-border-color: #ddd;
+    -fx-background-color: #2a2a40;
+    -fx-table-cell-border-color: #3c3c55;
+    -fx-control-inner-background: #2a2a40;
 }
+
+.table-column-header, .column-header-background {
+    -fx-background-color: #3c3c55;
+    -fx-text-fill: #ffffff;
+}
+
+.table-cell {
+    -fx-text-fill: #ffffff;
+}
+
+/* PieChart & BarChart */
+.chart-legend {
+    -fx-text-fill: #ffffff;
+}
+
+.pie-chart .chart-pie-label {
+    -fx-fill: #ffffff;
+    -fx-font-size: 12px;
+}
+
+.bar-chart {
+    -fx-background-color: transparent;
+}
+
+.bar-chart .chart-bar {
+    -fx-bar-fill: #6a6abb;
+}
+
+/* Alerts */
+.dialog-pane {
+    -fx-background-color: #2a2a40;
+    -fx-border-color: #4b4b7d;
+}
+
+.dialog-pane .content.label {
+    -fx-text-fill: #ffffff;
+}
+
+.dialog-pane .button {
+    -fx-background-color: #4b4b7d;
+    -fx-text-fill: #ffffff;
+}
+
+.dialog-pane .button:hover {
+    -fx-background-color: #6a6abb;
+}
+
+/* PieChart Slice Colors */
+.pie-color0 { -fx-pie-color: #6a6abb; }
+.pie-color1 { -fx-pie-color: #ff7f50; }
+.pie-color2 { -fx-pie-color: #00ced1; }
+.pie-color3 { -fx-pie-color: #ffb347; }
+.pie-color4 { -fx-pie-color: #90ee90; }
+.pie-color5 { -fx-pie-color: #f08080; }

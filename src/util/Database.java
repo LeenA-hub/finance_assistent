@@ -1,32 +1,44 @@
-
 package util;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class Database {
-    private static final String URL = "jdbc:sqlite:finance.db";
 
-    public static Connection connect() {
-        try {
-            // Force-load the SQLite JDBC driver
-            Class.forName("org.sqlite.JDBC");
-            return DriverManager.getConnection(URL);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+    private static final String URL = "jdbc:sqlite:cashflow.db";
+
+    public static Connection connect() throws SQLException {
+        return DriverManager.getConnection(URL);
     }
 
-    public static void createTables() {
-        String sql = "CREATE TABLE IF NOT EXISTS transactions (" +
-                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "date TEXT NOT NULL," +
-                "category TEXT NOT NULL," +
-                "amount REAL NOT NULL," +
-                "description TEXT" +
-                ");";
+    // Call this at app startup
+    public static void initialize() {
         try (Connection conn = connect(); Statement stmt = conn.createStatement()) {
-            stmt.execute(sql);
+            // Users table
+            stmt.execute("""
+                        CREATE TABLE IF NOT EXISTS users (
+                            id INTEGER PRIMARY KEY AUTOINCREMENT,
+                            username TEXT UNIQUE NOT NULL,
+                            password TEXT NOT NULL
+                        );
+                    """);
+
+            // Transactions table
+            stmt.execute("""
+                        CREATE TABLE IF NOT EXISTS transactions (
+                            id INTEGER PRIMARY KEY AUTOINCREMENT,
+                            user_id INTEGER NOT NULL,
+                            date TEXT,
+                            category TEXT,
+                            amount REAL,
+                            description TEXT,
+                            FOREIGN KEY(user_id) REFERENCES users(id)
+                        );
+                    """);
+
+            System.out.println("Database initialized successfully.");
         } catch (SQLException e) {
             e.printStackTrace();
         }
