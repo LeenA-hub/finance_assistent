@@ -3,6 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
+<?import javafx.collections.FXCollections?>
 
 <BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="controller.MainController">
 
@@ -10,58 +11,104 @@
         <Insets top="15" right="15" bottom="15" left="15"/>
     </padding>
 
-    <!-- Top: Welcome and Logout -->
+    <!-- 🔹 Top: Welcome + Navigation -->
     <top>
-        <HBox spacing="10" alignment="CENTER_LEFT">
-            <Label fx:id="welcomeLabel" text="Welcome!" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
-            <Button fx:id="logoutButton" text="Logout" />
+        <HBox spacing="15" alignment="CENTER_LEFT">
+            <Label fx:id="welcomeLabel" text="Welcome!" style="-fx-font-size:18px; -fx-font-weight:bold;"/>
+            <Button fx:id="logoutButton" text="Logout"/>
+            <Button fx:id="spendingDistButton" text="Spending & Distribution"/>
+            <Button fx:id="analysisButton" text="Analysis"/>
         </HBox>
     </top>
 
-    <!-- Center: Table of Transactions -->
+    <!-- 🔹 Left: Add Transaction + Income Entry -->
+    <left>
+        <VBox spacing="12" alignment="TOP_LEFT">
+            <Label text="Add Transaction" style="-fx-font-weight:bold;"/>
+
+            <Label text="Date:"/>
+            <TextField fx:id="dateField" promptText="YYYY-MM-DD"/>
+
+            <Label text="Category:"/>
+            <TextField fx:id="categoryField"/>
+
+            <Label text="Amount:"/>
+            <TextField fx:id="amountField"/>
+
+            <Label text="Description:"/>
+            <TextField fx:id="descriptionField"/>
+
+            <HBox spacing="10">
+                <Button fx:id="addButton" text="Add" onAction="#handleAdd"/>
+                <Button fx:id="exportButton" text="Export CSV" onAction="#handleExportCSV"/>
+            </HBox>
+
+            <Separator/>
+
+            <Label text="Income Entry" style="-fx-font-weight:bold;"/>
+            <HBox spacing="10">
+                <ComboBox fx:id="incomeTypeBox">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="Monthly"/>
+                            <String fx:value="Biweekly"/>
+                        </FXCollections>
+                    </items>
+                </ComboBox>
+                <TextField fx:id="incomeField" promptText="Enter Income"/>
+                <Button fx:id="setIncomeButton" text="Set" onAction="#handleSetIncome"/>
+            </HBox>
+        </VBox>
+    </left>
+
+    <!-- 🔹 Center: Charts + Transactions -->
     <center>
-        <TableView fx:id="tableView" prefHeight="300">
-            <columns>
-                <TableColumn fx:id="colDate" text="Date" prefWidth="100"/>
-                <TableColumn fx:id="colCategory" text="Category" prefWidth="100"/>
-                <TableColumn fx:id="colAmount" text="Amount" prefWidth="80"/>
-                <TableColumn fx:id="colDescription" text="Description" prefWidth="200"/>
-            </columns>
-        </TableView>
+        <VBox spacing="20">
+            <!-- Charts -->
+            <HBox spacing="25">
+                <!-- Money Flow Chart -->
+                <VBox>
+                    <Label text="Money Flow (Monthly Spending)" 
+                           style="-fx-font-size:14px; -fx-font-weight:bold;"/>
+                    <BarChart fx:id="monthlyChart" prefHeight="250" prefWidth="400">
+                        <xAxis>
+                            <CategoryAxis fx:id="xAxis" label="Month"/>
+                        </xAxis>
+                        <yAxis>
+                            <NumberAxis fx:id="yAxis" label="Amount"/>
+                        </yAxis>
+                    </BarChart>
+                </VBox>
+
+                <!-- Category Distribution -->
+                <VBox>
+                    <Label text="Spending by Category" 
+                           style="-fx-font-size:14px; -fx-font-weight:bold;"/>
+                    <PieChart fx:id="categoryChart" prefHeight="250" prefWidth="350"/>
+                </VBox>
+            </HBox>
+
+            <!-- Transaction Table -->
+            <VBox spacing="10">
+                <Label text="Recent Transactions" style="-fx-font-size:14px; -fx-font-weight:bold;"/>
+                <TableView fx:id="tableView" prefHeight="300" prefWidth="700">
+                    <columns>
+                        <TableColumn text="Date" fx:id="colDate" prefWidth="150"/>
+                        <TableColumn text="Category" fx:id="colCategory" prefWidth="150"/>
+                        <TableColumn text="Amount" fx:id="colAmount" prefWidth="150"/>
+                        <TableColumn text="Description" fx:id="colDescription" prefWidth="250"/>
+                    </columns>
+                </TableView>
+            </VBox>
+        </VBox>
     </center>
 
-    <!-- Right: Charts -->
-    <right>
-        <VBox spacing="15">
-            <Label text="Category Distribution" />
-            <PieChart fx:id="categoryChart" prefHeight="200" prefWidth="250"/>
-            <Label text="Monthly Spending" />
-            <BarChart fx:id="monthlyChart" prefHeight="200" prefWidth="250">
-                <xAxis>
-                    <CategoryAxis fx:id="xAxis" label="Month"/>
-                </xAxis>
-                <yAxis>
-                    <NumberAxis fx:id="yAxis" label="Amount"/>
-                </yAxis>
-            </BarChart>
-        </VBox>
-    </right>
-
-    <!-- Bottom: Add Transaction Form -->
+    <!-- 🔹 Bottom: Summary -->
     <bottom>
-        <GridPane hgap="10" vgap="10" alignment="CENTER">
-            <Label text="Date:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-            <TextField fx:id="dateField" promptText="YYYY-MM-DD" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
-            <Label text="Category:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-            <TextField fx:id="categoryField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
-            <Label text="Amount:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-            <TextField fx:id="amountField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
-            <Label text="Description:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-            <TextField fx:id="descriptionField" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
-            <Button fx:id="addButton" text="Add Transaction" onAction="#handleAdd" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
-            <Button fx:id="exportButton" text="Export CSV" onAction="#handleExportCSV" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-            <Label fx:id="balanceLabel" text="Total Balance: $0.00" GridPane.rowIndex="5" GridPane.columnIndex="0" GridPane.columnSpan="2"/>
-        </GridPane>
+        <HBox spacing="25" alignment="CENTER">
+            <Label fx:id="balanceLabel" text="Total Spending: $0.00"/>
+            <Label fx:id="savingsLabel" text="Savings: $0.00" style="-fx-font-weight:bold;"/>
+        </HBox>
     </bottom>
 
 </BorderPane>
