@@ -1,3 +1,4 @@
+
 package controller;
 
 import javafx.fxml.FXML;
@@ -17,11 +18,12 @@ import util.Database;
 
 import java.io.PrintWriter;
 import java.util.*;
+import java.io.IOException;
 
 public class MainController {
 
     @FXML
-    private TextField dateField, categoryField, amountField, descriptionField;
+    private TextField dateField, categoryField, amountField, descriptionField, incomeField;
     @FXML
     private TableView<Transaction> tableView;
     @FXML
@@ -35,38 +37,40 @@ public class MainController {
     @FXML
     private NumberAxis yAxis;
     @FXML
-    private Label balanceLabel, welcomeLabel;
+    private Label balanceLabel, savingsLabel, welcomeLabel;
     @FXML
-    private Button logoutButton;
+    private Button logoutButton, setIncomeButton, spendingDistButton, analysisButton;
 
     private User currentUser;
+    private double income = 0.0;
 
     /** Called from LoginController after login */
     public void setCurrentUser(User user) {
         this.currentUser = user;
-        System.out.println("Logged in as: " + user.getUsername());
-
         if (welcomeLabel != null) {
             welcomeLabel.setText("Welcome, " + user.getUsername() + "!");
         }
-
         loadTransactions();
     }
 
     @FXML
     public void initialize() {
-        System.out.println("MainController initialize called!");
-        Database.initialize(); // ensure tables exist
+        Database.initialize();
 
-        // Table columns
+        // Table setup
         colDate.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getDate()));
         colCategory.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getCategory()));
         colAmount.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().getAmount())));
         colDescription.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getDescription()));
 
-        if (logoutButton != null) {
+        if (logoutButton != null)
             logoutButton.setOnAction(e -> handleLogout());
-        }
+        if (setIncomeButton != null)
+            setIncomeButton.setOnAction(e -> handleSetIncome());
+        if (spendingDistButton != null)
+            spendingDistButton.setOnAction(e -> handleSpendingDist());
+        if (analysisButton != null)
+            analysisButton.setOnAction(e -> handleAnalysis());
     }
 
     /** Add transaction for the current user */
@@ -76,7 +80,6 @@ public class MainController {
             showAlert("Error", "No user logged in!");
             return;
         }
-
         try {
             Transaction t = new Transaction(
                     dateField.getText(),
@@ -91,7 +94,6 @@ public class MainController {
             categoryField.clear();
             amountField.clear();
             descriptionField.clear();
-
         } catch (NumberFormatException e) {
             showAlert("Invalid Input", "Amount must be a number.");
         } catch (Exception e) {
@@ -100,12 +102,23 @@ public class MainController {
         }
     }
 
+    /** Save user income */
+    @FXML
+    public void handleSetIncome() {
+        try {
+            income = Double.parseDouble(incomeField.getText());
+            refreshTransactions(); // update savings instantly
+            showAlert("Income Updated", "Income set to $" + income);
+        } catch (NumberFormatException e) {
+            showAlert("Invalid Input", "Income must be a number.");
+        }
+    }
+
     /** Export transactions to CSV */
     @FXML
     public void handleExportCSV() {
         if (currentUser == null)
             return;
-
         try (PrintWriter writer = new PrintWriter("transactions.csv")) {
             writer.println("Date,Category,Amount,Description");
             for (Transaction t : TransactionDAO.getTransactionsByUser(currentUser.getId())) {
@@ -124,10 +137,8 @@ public class MainController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Login.fxml"));
             Parent root = loader.load();
-
             Scene scene = new Scene(root, 400, 300);
             scene.getStylesheets().add(getClass().getResource("/css/style.css").toExternalForm());
-
             Stage stage = (Stage) logoutButton.getScene().getWindow();
             stage.setScene(scene);
             stage.setTitle("CashFlow Analyzer - Login");
@@ -141,7 +152,6 @@ public class MainController {
     public void loadTransactions() {
         if (currentUser == null)
             return;
-
         try {
             List<Transaction> transactions = TransactionDAO.getTransactionsByUser(currentUser.getId());
             if (transactions == null)
@@ -170,8 +180,10 @@ public class MainController {
     }
 
     private void updateBalance(ObservableList<Transaction> transactions) {
-        double total = transactions.stream().mapToDouble(Transaction::getAmount).sum();
-        balanceLabel.setText(String.format("Total Balance: $%.2f", total));
+        double totalSpent = transactions.stream().mapToDouble(Transaction::getAmount).sum();
+        balanceLabel.setText(String.format("Total Spending: $%.2f", totalSpent));
+        double savings = income - totalSpent;
+        savingsLabel.setText(String.format("Savings: $%.2f", savings));
     }
 
     private void updateCategoryChart(ObservableList<Transaction> transactions) {
@@ -203,19 +215,44 @@ public class MainController {
         }
 
         XYChart.Series<String, Number> series = new XYChart.Series<>();
-        monthlyMap.forEach((month, total) -> {
-            XYChart.Data<String, Number> data = new XYChart.Data<>(month, total);
-            series.getData().add(data);
-
-            Tooltip tooltip = new Tooltip(String.format("%s: $%.2f", month, total));
-            data.nodeProperty().addListener((obs, oldNode, newNode) -> {
-                if (newNode != null)
-                    Tooltip.install(newNode, tooltip);
-            });
-        });
+        monthlyMap.forEach((month, total) -> series.getData().add(new XYChart.Data<>(month, total)));
 
         monthlyChart.getData().clear();
         monthlyChart.getData().add(series);
+    }
+
+    /** Open Monthly/Biweekly Spending page */
+    @FXML
+    private void handleSpendingDist() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/monthly_spending.fxml"));
+            Parent root = loader.load();
+
+            // Pass currentUser to the new controller
+            controller.MonthlySpendingController msController = loader.getController();
+            msController.setCurrentUser(currentUser);
+
+            Scene scene = new Scene(root, 1000, 700);
+            Stage stage = (Stage) spendingDistButton.getScene().getWindow();
+            stage.setScene(scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Error", "Failed to load Monthly Spending page.");
+        }
+    }
+
+    /** Open Analysis page */
+    @FXML
+    private void handleAnalysis() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/analysis.fxml"));
+            Scene scene = new Scene(loader.load(), 1000, 700);
+            Stage stage = (Stage) analysisButton.getScene().getWindow();
+            stage.setScene(scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Error", "Failed to load Analysis page.");
+        }
     }
 
     private void showAlert(String title, String message) {

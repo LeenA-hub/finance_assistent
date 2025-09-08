@@ -1,10 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.scene.chart.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.geometry.Insets?>
-<?import javafx.collections.FXCollections?>
-
 <BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="controller.MainController">
 
     <padding>
@@ -64,10 +57,11 @@
     <!-- 🔹 Center: Charts + Transactions -->
     <center>
         <VBox spacing="20">
-            <!-- Charts -->
+
+            <!-- Charts in cards -->
             <HBox spacing="25">
                 <!-- Money Flow Chart -->
-                <VBox>
+                <VBox spacing="5" styleClass="card">
                     <Label text="Money Flow (Monthly Spending)" 
                            style="-fx-font-size:14px; -fx-font-weight:bold;"/>
                     <BarChart fx:id="monthlyChart" prefHeight="250" prefWidth="400">
@@ -81,15 +75,15 @@
                 </VBox>
 
                 <!-- Category Distribution -->
-                <VBox>
+                <VBox spacing="5" styleClass="card">
                     <Label text="Spending by Category" 
                            style="-fx-font-size:14px; -fx-font-weight:bold;"/>
                     <PieChart fx:id="categoryChart" prefHeight="250" prefWidth="350"/>
                 </VBox>
             </HBox>
 
-            <!-- Transaction Table -->
-            <VBox spacing="10">
+            <!-- Transaction Table in card -->
+            <VBox spacing="10" styleClass="card">
                 <Label text="Recent Transactions" style="-fx-font-size:14px; -fx-font-weight:bold;"/>
                 <TableView fx:id="tableView" prefHeight="300" prefWidth="700">
                     <columns>
@@ -103,11 +97,11 @@
         </VBox>
     </center>
 
-    <!-- 🔹 Bottom: Summary -->
+    <!-- 🔹 Bottom: Summary in cards -->
     <bottom>
         <HBox spacing="25" alignment="CENTER">
-            <Label fx:id="balanceLabel" text="Total Spending: $0.00"/>
-            <Label fx:id="savingsLabel" text="Savings: $0.00" style="-fx-font-weight:bold;"/>
+            <Label fx:id="balanceLabel" text="Total Spending: $0.00" styleClass="card"/>
+            <Label fx:id="savingsLabel" text="Savings: $0.00" styleClass="card"/>
         </HBox>
     </bottom>
 
