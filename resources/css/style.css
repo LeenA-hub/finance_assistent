@@ -1,98 +1,195 @@
-/* Base dark theme */
+/* ===========================
+   style.css — Dark Cute Theme
+   Merged from user's original + enhancements
+   =========================== */
+
+/* Base dark theme (kept from original) */
 .root {
     -fx-font-family: "Segoe UI", sans-serif;
     -fx-background-color: #1e1e2f;
     -fx-text-fill: #eeeeee;
 }
 
-/* Labels */
+/* Header / custom labels used in FXML */
+.header-label {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+}
+
+.subheader-label {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #bbbbbb;
+}
+
+/* Labels (original) */
 .label {
     -fx-text-fill: #ffffff;
     -fx-font-size: 14px;
 }
 
-/* TextField and PasswordField */
+/* TextField and PasswordField (original + slightly rounded) */
 .text-field, .password-field {
     -fx-background-color: #2a2a40;
     -fx-text-fill: #ffffff;
     -fx-prompt-text-fill: #aaaaaa;
-    -fx-background-radius: 5;
-    -fx-border-radius: 5;
+    -fx-background-radius: 6;
+    -fx-border-radius: 6;
     -fx-border-color: #3c3c55;
     -fx-border-width: 1;
-    -fx-padding: 5 10 5 10;
+    -fx-padding: 6 10 6 10;
 }
 
-/* Buttons */
+/* Buttons (original colors kept but made rounder + shadow) */
 .button {
     -fx-background-color: #4b4b7d;
     -fx-text-fill: #ffffff;
     -fx-font-weight: bold;
-    -fx-background-radius: 5;
+    -fx-background-radius: 12;
     -fx-cursor: hand;
+    -fx-padding: 6 14 6 14;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.45), 6, 0, 0, 2);
+    -fx-border-color: transparent;
 }
-
 .button:hover {
     -fx-background-color: #6a6abb;
 }
+.button:focused {
+    -fx-effect: dropshadow(gaussian, rgba(108,92,231,0.35), 8, 0, 0, 3);
+}
 
-/* TableView */
+/* TableView (original rules preserved + nicer row/rounded visuals) */
 .table-view {
     -fx-background-color: #2a2a40;
     -fx-table-cell-border-color: #3c3c55;
     -fx-control-inner-background: #2a2a40;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-padding: 6;
 }
 
-.table-column-header, .column-header-background {
+/* Column header / header background */
+.table-column-header, .column-header-background, .table-view .column-header {
     -fx-background-color: #3c3c55;
     -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
 }
 
+/* Table cells (original + alternate row effect + selection) */
 .table-cell {
     -fx-text-fill: #ffffff;
 }
+.table-row-cell {
+    -fx-background-color: transparent;
+}
+.table-row-cell:filled:selected, .table-row-cell:selected {
+    -fx-background-color: rgba(68,68,102,0.6); /* selected row */
+    -fx-text-fill: #ffffff;
+}
 
-/* PieChart & BarChart */
+/* Slight alternate row effect using pseudo class (works if you apply styleClass programmatically) */
+.table-row-cell:odd {
+    -fx-background-color: rgba(255,255,255,0.02);
+}
+.table-row-cell:even {
+    -fx-background-color: transparent;
+}
+
+/* Chart skinning and legend (original preserved) */
 .chart-legend {
     -fx-text-fill: #ffffff;
 }
 
+/* PieChart text */
 .pie-chart .chart-pie-label {
     -fx-fill: #ffffff;
     -fx-font-size: 12px;
 }
 
+/* BarChart background (keep transparent so panel background shows through) */
 .bar-chart {
     -fx-background-color: transparent;
 }
 
+/* Bar colors + hover (kept original base, added hover) */
 .bar-chart .chart-bar {
-    -fx-bar-fill: #6a6abb;
+    -fx-bar-fill: #6a6abb; /* original purple */
+}
+.bar-chart .chart-bar:hover {
+    -fx-bar-fill: linear-gradient(to bottom, #a29bfe, #6a6abb);
 }
 
-/* Alerts */
+/* Chart plot background */
+.chart-plot-background {
+    -fx-background-color: transparent;
+}
+
+/* Chart-plot grid lines subtle */
+.chart-horizontal-grid-lines, .chart-vertical-grid-lines {
+    -fx-stroke: rgba(255,255,255,0.03);
+}
+
+/* Dialog / Alert styling (original) */
 .dialog-pane {
     -fx-background-color: #2a2a40;
     -fx-border-color: #4b4b7d;
 }
-
 .dialog-pane .content.label {
     -fx-text-fill: #ffffff;
 }
-
 .dialog-pane .button {
     -fx-background-color: #4b4b7d;
     -fx-text-fill: #ffffff;
 }
-
 .dialog-pane .button:hover {
     -fx-background-color: #6a6abb;
 }
 
-/* PieChart Slice Colors */
+/* Small card style (useful for summary labels/cards) */
+.card {
+    -fx-background-color: #262635;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-padding: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 6, 0, 0, 2);
+}
+
+/* Label inside cards */
+.card-label {
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+/* Optional spacing for VBoxes/HBoxes with cards */
+.vbox.card, .hbox.card {
+    -fx-spacing: 10;
+}
+/* Make TableView headers / cells look slightly inset on dark bg */
+.table-view .column-header .label {
+    -fx-text-fill: #eeeeff;
+}
+
+/* Chart-specific color hints for pie slices (original pie-color classes preserved) */
 .pie-color0 { -fx-pie-color: #6a6abb; }
 .pie-color1 { -fx-pie-color: #ff7f50; }
 .pie-color2 { -fx-pie-color: #00ced1; }
 .pie-color3 { -fx-pie-color: #ffb347; }
 .pie-color4 { -fx-pie-color: #90ee90; }
 .pie-color5 { -fx-pie-color: #f08080; }
+
+/* Tooltip style (so chart/tooltips match theme) */
+.tooltip {
+    -fx-background-color: #333344;
+    -fx-text-fill: #ffffff;
+    -fx-background-radius: 6;
+    -fx-padding: 6 8 6 8;
+    -fx-border-color: transparent;
+}
+
+/* Small responsive tweaks for labels inside the UI */
+.label.small {
+    -fx-font-size: 12px;
+    -fx-text-fill: #cccccc;
+}

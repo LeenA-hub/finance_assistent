@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="controller.MonthlySpendingController">
+
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <!-- 🔹 Top: Title + Interval Selection -->
+    <top>
+        <HBox spacing="20" alignment="CENTER_LEFT">
+            <Label text="Spending Analysis" style="-fx-font-size:20px; -fx-font-weight:bold;"/>
+            <Label text="Interval:"/>
+            <ComboBox fx:id="intervalBox">
+                <items>
+                    <FXCollections fx:factory="observableArrayList">
+                        <String fx:value="Monthly"/>
+                        <String fx:value="Biweekly"/>
+                    </FXCollections>
+                </items>
+            </ComboBox>
+        </HBox>
+    </top>
+
+    <!-- 🔹 Center: Bar Chart -->
+    <center>
+        <VBox spacing="15" alignment="CENTER">
+            <BarChart fx:id="spendingChart" prefHeight="500" prefWidth="900">
+                <xAxis>
+                    <CategoryAxis fx:id="xAxis" label="Period"/>
+                </xAxis>
+                <yAxis>
+                    <NumberAxis fx:id="yAxis" label="Amount"/>
+                </yAxis>
+            </BarChart>
+        </VBox>
+    </center>
+
+</BorderPane>
