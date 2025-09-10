@@ -1,5 +1,10 @@
 package controller;
 
+import javafx.fxml.FXML;
+import javafx.scene.chart.LineChart;
+import javafx.scene.layout.VBox;
+import javafx.scene.control.Label;
+
 public class AnalysisController {
     @FXML
     private LineChart<String, Number> trendChart;

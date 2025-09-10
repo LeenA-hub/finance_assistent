@@ -8,6 +8,10 @@ import javafx.scene.Parent;
 import javafx.fxml.FXMLLoader;
 import model.User;
 import model.UserDAO;
+import javafx.fxml.FXML;
+import javafx.scene.chart.LineChart;
+import javafx.scene.layout.VBox;
+import javafx.scene.control.Label;
 
 import java.io.IOException;
 

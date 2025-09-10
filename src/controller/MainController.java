@@ -9,6 +9,10 @@ import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.fxml.FXML;
+import javafx.scene.chart.LineChart;
+import javafx.scene.layout.VBox;
+import javafx.scene.control.Label;
 
 import model.Transaction;
 import model.TransactionDAO;

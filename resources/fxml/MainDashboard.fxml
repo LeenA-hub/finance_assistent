@@ -5,19 +5,25 @@
 <?import javafx.scene.chart.*?>
 <?import javafx.geometry.Insets?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="controller.MainController">
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="controller.MainController" stylesheets="@dashboard.css">
     <padding><Insets top="15" right="15" bottom="15" left="15"/></padding>
 
+    <!-- ===================== -->
+    <!-- Header / Navbar -->
+    <!-- ===================== -->
     <top>
-        <HBox spacing="15" alignment="CENTER_LEFT">
-            <Label fx:id="welcomeLabel" text="Welcome!" style="-fx-font-size:18px; -fx-font-weight:bold;"/>
+        <HBox spacing="15" alignment="CENTER_LEFT" styleClass="navbar">
+            <Label fx:id="welcomeLabel" text="Welcome!"/>
             <Button fx:id="logoutButton" text="Logout"/>
         </HBox>
     </top>
 
+    <!-- ===================== -->
+    <!-- Right Panel (Add Transaction) -->
+    <!-- ===================== -->
     <right>
-        <VBox spacing="12" alignment="TOP_LEFT">
-            <Label text="Add Transaction" style="-fx-font-weight:bold;"/>
+        <VBox spacing="12" alignment="TOP_LEFT" styleClass="card accent-card" prefWidth="260">
+            <Label text="Add Transaction" styleClass="header"/>
             <Label text="Date:"/><TextField fx:id="dateField" promptText="YYYY-MM-DD"/>
             <Label text="Category:"/><TextField fx:id="categoryField"/>
             <Label text="Amount:"/><TextField fx:id="amountField"/>
@@ -29,38 +35,49 @@
         </VBox>
     </right>
 
+    <!-- ===================== -->
+    <!-- Center Section (Charts + Table) -->
+    <!-- ===================== -->
     <center>
         <VBox spacing="20">
-            <HBox spacing="25">
-                <VBox spacing="5">
-                    <Label text="Money Flow (Monthly Spending)" style="-fx-font-size:14px; -fx-font-weight:bold;"/>
-                    <BarChart fx:id="monthlyChart" prefHeight="250" prefWidth="400">
+
+            <!-- Charts Row -->
+            <HBox spacing="20">
+                <VBox spacing="8" styleClass="card accent-card" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS">
+                    <Label text="Money Flow (Monthly Spending)" styleClass="header"/>
+                    <BarChart fx:id="monthlyChart" prefHeight="250" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS">
                         <xAxis><CategoryAxis fx:id="xAxis" label="Month"/></xAxis>
                         <yAxis><NumberAxis fx:id="yAxis" label="Amount"/></yAxis>
                     </BarChart>
                 </VBox>
-                <VBox spacing="5">
-                    <Label text="Spending by Category" style="-fx-font-size:14px; -fx-font-weight:bold;"/>
-                    <PieChart fx:id="categoryChart" prefHeight="250" prefWidth="350"/>
+
+                <VBox spacing="8" styleClass="card accent-card" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS">
+                    <Label text="Spending by Category" styleClass="header"/>
+                    <PieChart fx:id="categoryChart" prefHeight="250" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS"/>
                 </VBox>
             </HBox>
-            <VBox spacing="10">
-                <Label text="Recent Transactions" style="-fx-font-size:14px; -fx-font-weight:bold;"/>
-                <TableView fx:id="tableView" prefHeight="300" prefWidth="700">
+
+            <!-- Transactions Table -->
+            <VBox spacing="10" styleClass="card accent-card" maxWidth="600" alignment="CENTER">
+                <Label text="Recent Transactions" styleClass="header"/>
+                <TableView fx:id="tableView" prefHeight="250" prefWidth="800" maxWidth="880">
                     <columns>
-                        <TableColumn text="Date" fx:id="colDate" prefWidth="150"/>
-                        <TableColumn text="Category" fx:id="colCategory" prefWidth="150"/>
-                        <TableColumn text="Amount" fx:id="colAmount" prefWidth="150"/>
-                        <TableColumn text="Description" fx:id="colDescription" prefWidth="250"/>
+                        <TableColumn text="Date" fx:id="colDate" prefWidth="120"/>
+                        <TableColumn text="Category" fx:id="colCategory" prefWidth="140"/>
+                        <TableColumn text="Amount" fx:id="colAmount" prefWidth="120"/>
+                        <TableColumn text="Description" fx:id="colDescription" prefWidth="180"/>
                     </columns>
                 </TableView>
             </VBox>
         </VBox>
     </center>
 
+    <!-- ===================== -->
+    <!-- Footer -->
+    <!-- ===================== -->
     <bottom>
         <HBox spacing="25" alignment="CENTER">
-            <Label fx:id="balanceLabel" text="Total Balance: $0.00"/>
+            <Label fx:id="balanceLabel" text="Total Balance: $0.00" styleClass="footer-label"/>
         </HBox>
     </bottom>
 </BorderPane>
