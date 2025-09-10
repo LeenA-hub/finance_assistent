@@ -44,21 +44,16 @@ public class MainController {
     /** Called from LoginController after login */
     public void setCurrentUser(User user) {
         this.currentUser = user;
-        System.out.println("Logged in as: " + user.getUsername());
-
         if (welcomeLabel != null) {
             welcomeLabel.setText("Welcome, " + user.getUsername() + "!");
         }
-
         loadTransactions();
     }
 
     @FXML
     public void initialize() {
-        System.out.println("MainController initialize called!");
         Database.initialize(); // ensure tables exist
 
-        // Table columns
         colDate.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getDate()));
         colCategory.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getCategory()));
         colAmount.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().getAmount())));
@@ -72,10 +67,8 @@ public class MainController {
     /** Add transaction for the current user */
     @FXML
     public void handleAdd() {
-        if (currentUser == null) {
-            showAlert("Error", "No user logged in!");
+        if (currentUser == null)
             return;
-        }
 
         try {
             Transaction t = new Transaction(
@@ -126,8 +119,6 @@ public class MainController {
             Parent root = loader.load();
 
             Scene scene = new Scene(root, 400, 300);
-            scene.getStylesheets().add(getClass().getResource("/css/style.css").toExternalForm());
-
             Stage stage = (Stage) logoutButton.getScene().getWindow();
             stage.setScene(scene);
             stage.setTitle("CashFlow Analyzer - Login");
@@ -183,14 +174,6 @@ public class MainController {
         ObservableList<PieChart.Data> pieData = FXCollections.observableArrayList();
         map.forEach((k, v) -> pieData.add(new PieChart.Data(k, v)));
         categoryChart.setData(pieData);
-
-        pieData.forEach(data -> {
-            Tooltip tooltip = new Tooltip(String.format("%s: $%.2f", data.getName(), data.getPieValue()));
-            data.nodeProperty().addListener((obs, oldNode, newNode) -> {
-                if (newNode != null)
-                    Tooltip.install(newNode, tooltip);
-            });
-        });
     }
 
     private void updateMonthlyChart(ObservableList<Transaction> transactions) {
@@ -203,16 +186,7 @@ public class MainController {
         }
 
         XYChart.Series<String, Number> series = new XYChart.Series<>();
-        monthlyMap.forEach((month, total) -> {
-            XYChart.Data<String, Number> data = new XYChart.Data<>(month, total);
-            series.getData().add(data);
-
-            Tooltip tooltip = new Tooltip(String.format("%s: $%.2f", month, total));
-            data.nodeProperty().addListener((obs, oldNode, newNode) -> {
-                if (newNode != null)
-                    Tooltip.install(newNode, tooltip);
-            });
-        });
+        monthlyMap.forEach((month, total) -> series.getData().add(new XYChart.Data<>(month, total)));
 
         monthlyChart.getData().clear();
         monthlyChart.getData().add(series);

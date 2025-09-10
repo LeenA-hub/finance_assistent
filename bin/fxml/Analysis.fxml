@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="controller.AnalysisController"
+            style="-fx-background-color: #1e1e1e; -fx-padding: 20;">
+
+    <!-- Top Header -->
+    <top>
+        <Label text="Financial Analysis"
+               style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #ffffff;" 
+               BorderPane.alignment="CENTER"/>
+    </top>
+
+    <!-- Main Content -->
+    <center>
+        <VBox spacing="25" alignment="CENTER">
+
+            <!-- Spending Trends -->
+            <Label text="Spending Trends"
+                   style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #cccccc;"/>
+
+            <LineChart fx:id="trendChart" prefWidth="800" prefHeight="350" style="-fx-background-color: #2b2b2b; -fx-text-fill: #ffffff;">
+                <xAxis>
+                    <CategoryAxis fx:id="xAxisTrend" label="Month" />
+                </xAxis>
+                <yAxis>
+                    <NumberAxis fx:id="yAxisTrend" label="Amount" />
+                </yAxis>
+            </LineChart>
+
+            <!-- Insights / Cards -->
+            <HBox spacing="20" alignment="CENTER">
+                <VBox fx:id="analysisCards" spacing="15" prefWidth="600">
+                    <!-- Controller adds cards here -->
+                </VBox>
+            </HBox>
+
+        </VBox>
+    </center>
+</BorderPane>
